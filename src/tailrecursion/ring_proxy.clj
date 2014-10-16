@@ -50,7 +50,7 @@
                                    (subs (:uri req) (.length proxied-path)))
                               nil
                               nil)]
-         (forward-request req remote-uri))
+         (forward-request req remote-uri [http-opts]))
        (handler req)))))
 
 (defn local-proxy-server
