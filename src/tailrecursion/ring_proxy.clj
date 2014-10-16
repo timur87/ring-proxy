@@ -50,16 +50,7 @@
                                    (subs (:uri req) (.length proxied-path)))
                               nil
                               nil)]
-         (-> (merge {:method (:request-method req)
-                     :url (str remote-uri "?" (:query-string req))
-                     :headers (dissoc (:headers req) "host" "content-length")
-                     :body (if-let [len (get-in req [:headers "content-length"])]
-                             (slurp-binary (:body req) (Integer/parseInt len)))
-                     :follow-redirects true
-                     :throw-exceptions false
-                     :as :stream} http-opts)
-             request
-             prepare-cookies))
+         (forward-request req remote-uri))
        (handler req)))))
 
 (defn local-proxy-server
